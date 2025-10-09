@@ -1,0 +1,8 @@
+spring:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+bootstrap:
+  properties:
+logging:
+  level:
+    com.ljx.gulimall: debug

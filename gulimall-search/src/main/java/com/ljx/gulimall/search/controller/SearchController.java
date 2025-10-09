@@ -1,0 +1,16 @@
+package com.ljx.gulimall.search.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+
+@Controller
+public class SearchController {
+
+
+    @GetMapping("/list.html")
+    public String listHtml(){
+        return "list";
+    }
+
+
+}
