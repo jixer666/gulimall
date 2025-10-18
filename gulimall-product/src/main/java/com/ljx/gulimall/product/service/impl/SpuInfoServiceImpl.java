@@ -134,10 +134,15 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
             // 调用失败，进行重试，最多重试3次
             int count = 3;
             while (count-- > 0) {
-                R<Boolean> retryResult = searchFeignService.produceStatusUp(skuEsModels);
-                if (retryResult.getDataObj(Boolean.class)) {
-                    updateSpuStatus(spuId, PublishStatusEnum.SPU_DOWN.getKey());
-                    break;
+                try {
+                    Thread.sleep(2000);
+                    R<Boolean> retryResult = searchFeignService.produceStatusUp(skuEsModels);
+                    if (retryResult.getDataObj(Boolean.class)) {
+                        updateSpuStatus(spuId, PublishStatusEnum.SPU_DOWN.getKey());
+                        break;
+                    }
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
                 }
             }
 

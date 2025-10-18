@@ -36,7 +36,7 @@ public class GulimallExceptionControllerAdvice {
 
     @ExceptionHandler(value = Throwable.class)
     public R handleValidException(Throwable throwable) {
-        log.error("Throwable错误，未处理：" + throwable);
+        log.error("Throwable错误，未处理：{}", throwable.getStackTrace());
         return R.error(BizCodeEnume.UNKNOW_EXCEPTION.getCode(), BizCodeEnume.UNKNOW_EXCEPTION.getMsg());
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
 public class GulimallSearchConfig {
 
     public static final RequestOptions COMMON_OPTIONS;
+
     static {
         RequestOptions.Builder builder = RequestOptions.DEFAULT.toBuilder();
         COMMON_OPTIONS = builder.build();
@@ -23,7 +24,7 @@ public class GulimallSearchConfig {
 
     @Bean
     public RestHighLevelClient restHighLevelClient() {
-        return new RestHighLevelClient(RestClient.builder(new HttpHost("192.168.101.130", 9200)));
+        return new RestHighLevelClient(RestClient.builder(new HttpHost("127.0.0.1", 9200)));
     }
 
 }
