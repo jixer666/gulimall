@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -41,6 +42,9 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
     @Autowired
     private SkuSaleAttrValueService skuSaleAttrValueService;
+
+    @Autowired
+    private ThreadPoolExecutor threadPoolExecutor;
 
 
     @Override
@@ -91,27 +95,27 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             skuVo.setInfo(skuInfo);
 
             return skuInfo;
-        });
+        }, threadPoolExecutor);
 
-        CompletableFuture<Void> imageFuture = skuFuture.thenAccept((res) -> {
+        CompletableFuture<Void> imageFuture = skuFuture.thenAcceptAsync((res) -> {
             // sku图片列表
             skuVo.setImages(skuImagesService.selectBySkuId(res.getSkuId()));
-        });
+        }, threadPoolExecutor);
 
-        CompletableFuture<Void> saleAttrFuture = skuFuture.thenAccept((res) -> {
+        CompletableFuture<Void> saleAttrFuture = skuFuture.thenAcceptAsync((res) -> {
             // spu销售属性
             skuVo.setSaleAttr(skuSaleAttrValueService.getSkuSaleAttrValueBySpuId(res.getSpuId()));
-        });
+        }, threadPoolExecutor);
 
-        CompletableFuture<Void> spuFuture = skuFuture.thenAccept((res) -> {
+        CompletableFuture<Void> spuFuture = skuFuture.thenAcceptAsync((res) -> {
             // spu详情信息
             skuVo.setDesc(spuInfoDescService.getById(res.getSpuId()));
-        });
+        }, threadPoolExecutor);
 
-        CompletableFuture<Void> spuGroupFuture = skuFuture.thenAccept((res) -> {
+        CompletableFuture<Void> spuGroupFuture = skuFuture.thenAcceptAsync((res) -> {
             // spu规格属性
             skuVo.setGroupAttrs(attrGroupService.getAttrGroupBySpuIdAndCategoryId(res.getSpuId(), res.getCatalogId()));
-        });
+        }, threadPoolExecutor);
 
         try {
             CompletableFuture.allOf(imageFuture, saleAttrFuture, spuFuture, spuGroupFuture).get();
