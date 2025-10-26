@@ -1,0 +1,11 @@
+server:
+  port: 20000
+spring:
+  thymeleaf:
+    cache: false
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+
+logging:
+  level:
+    com.ljx.gulimall: debug
