@@ -1,6 +1,10 @@
 package com.ljx.gulimall.product.service.impl;
 
+import com.ljx.common.utils.AssertUtil;
 import org.springframework.stereotype.Service;
+
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -26,4 +30,9 @@ public class SkuImagesServiceImpl extends ServiceImpl<SkuImagesDao, SkuImagesEnt
         return new PageUtils(page);
     }
 
+    @Override
+    public List<SkuImagesEntity> selectBySkuId(Long skuId) {
+        AssertUtil.isNotEmpty(skuId, "sku Id 不能为空");
+        return Collections.emptyList();
+    }
 }

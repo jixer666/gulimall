@@ -13,5 +13,45 @@
         <result property="attrSort" column="attr_sort"/>
     </resultMap>
 
+<!--    <resultMap type="com.ljx.gulimall.product.model.vo.SpuSaleAttrVO" id="skuSaleAttrValueResult">-->
+<!--        <result property="attrId" column="attr_id"/>-->
+<!--        <result property="attrName" column="attr_name"/>-->
+<!--        <result property="attrValues" column="attr_values"/>-->
+<!--    </resultMap>-->
+<!--    第一版本-->
+<!--    <select id="selectSkuSaleAttrValueBySpuId" resultMap="skuSaleAttrValueResult">-->
+<!--        SELECT-->
+<!--            pss.attr_id,-->
+<!--            pss.attr_name,-->
+<!--            GROUP_CONCAT(distinct pss.attr_value) attr_values-->
+<!--        FROM-->
+<!--            pms_sku_info ps-->
+<!--                LEFT JOIN pms_sku_sale_attr_value pss ON ps.sku_id = pss.sku_id-->
+<!--        where ps.spu_id = #{spuId}-->
+<!--        GROUP BY pss.attr_id, pss.attr_name-->
+<!--    </select>-->
+
+
+        <resultMap type="com.ljx.gulimall.product.model.vo.SpuSaleAttrVO" id="skuSaleAttrValueResult">
+            <result property="attrId" column="attr_id"/>
+            <result property="attrName" column="attr_name"/>
+            <collection property="attrValues" ofType="com.ljx.gulimall.product.model.vo.SpuSaleAttrValueItemVO" >
+                <result property="attrValue" column="attr_value"/>
+                <result property="skuIds" column="sku_ids" />
+            </collection>
+        </resultMap>
+<!--    第二版本-->
+        <select id="selectSkuSaleAttrValueBySpuId" resultMap="skuSaleAttrValueResult">
+            SELECT
+                pss.attr_id,
+                pss.attr_name,
+                pss.attr_value,
+                GROUP_CONCAT(distinct pss.sku_id) sku_Ids
+            FROM
+                pms_sku_info ps
+            LEFT JOIN pms_sku_sale_attr_value pss ON ps.sku_id = pss.sku_id
+            where ps.spu_id = #{spuId}
+            GROUP BY pss.attr_id, pss.attr_name, pss.attr_value
+        </select>
 
 </mapper>
