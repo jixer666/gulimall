@@ -2,7 +2,12 @@ package com.ljx.gulimall.member.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
-import com.ljx.gulimall.member.entity.MemberEntity;
+import com.ljx.common.utils.R;
+import com.ljx.gulimall.member.domain.entity.MemberEntity;
+import com.ljx.gulimall.member.domain.vo.GithubUserVO;
+import com.ljx.gulimall.member.domain.vo.LoginVO;
+import com.ljx.gulimall.member.domain.vo.MemberVO;
+import com.ljx.gulimall.member.domain.vo.RegisterVO;
 
 import java.util.Map;
 
@@ -16,5 +21,11 @@ import java.util.Map;
 public interface MemberService extends IService<MemberEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    R register(RegisterVO registerVO);
+
+    R login(LoginVO loginVO);
+
+    R<MemberVO> githubLogin(GithubUserVO githubUserVO);
 }
 

@@ -1,6 +1,6 @@
 package com.ljx.gulimall.member.dao;
 
-import com.ljx.gulimall.member.entity.MemberReceiveAddressEntity;
+import com.ljx.gulimall.member.domain.entity.MemberReceiveAddressEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

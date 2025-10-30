@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ljx.gulimall.member.entity.MemberStatisticsInfoEntity;
+import com.ljx.gulimall.member.domain.entity.MemberStatisticsInfoEntity;
 import com.ljx.gulimall.member.service.MemberStatisticsInfoService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.R;

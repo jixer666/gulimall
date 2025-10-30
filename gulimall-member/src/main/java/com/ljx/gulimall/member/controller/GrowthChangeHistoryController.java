@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ljx.gulimall.member.entity.GrowthChangeHistoryEntity;
+import com.ljx.gulimall.member.domain.entity.GrowthChangeHistoryEntity;
 import com.ljx.gulimall.member.service.GrowthChangeHistoryService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.R;

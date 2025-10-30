@@ -1,11 +1,15 @@
-package com.ljx.gulimall.member.entity;
+package com.ljx.gulimall.member.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.ljx.gulimall.member.domain.vo.GithubUserVO;
+import com.ljx.gulimall.member.domain.vo.RegisterVO;
 import lombok.Data;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * 会员
@@ -93,4 +97,22 @@ public class MemberEntity implements Serializable {
 	 */
 	private Date createTime;
 
+    public static MemberEntity buildByRegisterVo(RegisterVO registerVO) {
+        MemberEntity member = new MemberEntity();
+        member.setUsername(registerVO.getUserName());
+        member.setPassword(registerVO.getPassword());
+        member.setMobile(registerVO.getPhone());
+        // 使用 md5 + 盐 进行加密，防止被彩虹表破解
+        member.setPassword(new BCryptPasswordEncoder().encode(registerVO.getPassword()));
+
+        return member;
+    }
+
+    public static MemberEntity buildByGithubUserVo(GithubUserVO githubUserVO) {
+        MemberEntity member = new MemberEntity();
+        member.setUsername(githubUserVO.getLogin());
+        member.setNickname(githubUserVO.getName());
+
+        return member;
+    }
 }

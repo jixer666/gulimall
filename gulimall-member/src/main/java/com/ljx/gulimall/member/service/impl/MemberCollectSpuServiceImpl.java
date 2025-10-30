@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.member.dao.MemberCollectSpuDao;
-import com.ljx.gulimall.member.entity.MemberCollectSpuEntity;
+import com.ljx.gulimall.member.domain.entity.MemberCollectSpuEntity;
 import com.ljx.gulimall.member.service.MemberCollectSpuService;
 
 

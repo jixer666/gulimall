@@ -1,4 +1,4 @@
-package com.ljx.gulimall.member.entity;
+package com.ljx.gulimall.member.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;

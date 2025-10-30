@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.member.dao.GrowthChangeHistoryDao;
-import com.ljx.gulimall.member.entity.GrowthChangeHistoryEntity;
+import com.ljx.gulimall.member.domain.entity.GrowthChangeHistoryEntity;
 import com.ljx.gulimall.member.service.GrowthChangeHistoryService;
 
 

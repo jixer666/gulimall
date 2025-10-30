@@ -1,4 +1,4 @@
-package com.ljx.gulimall.member.entity;
+package com.ljx.gulimall.member.domain.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,15 +8,15 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 会员收藏的商品
+ * 积分变化历史记录
  * 
  * @author LiJunXi
  * @email 2770063826@qq.com
  * @date 2025-07-15 21:52:55
  */
 @Data
-@TableName("ums_member_collect_spu")
-public class MemberCollectSpuEntity implements Serializable {
+@TableName("ums_integration_change_history")
+public class IntegrationChangeHistoryEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,24 +25,24 @@ public class MemberCollectSpuEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * 会员id
+	 * member_id
 	 */
 	private Long memberId;
-	/**
-	 * spu_id
-	 */
-	private Long spuId;
-	/**
-	 * spu_name
-	 */
-	private String spuName;
-	/**
-	 * spu_img
-	 */
-	private String spuImg;
 	/**
 	 * create_time
 	 */
 	private Date createTime;
+	/**
+	 * 变化的值
+	 */
+	private Integer changeCount;
+	/**
+	 * 备注
+	 */
+	private String note;
+	/**
+	 * 来源[0->购物；1->管理员修改;2->活动]
+	 */
+	private Integer sourceTyoe;
 
 }

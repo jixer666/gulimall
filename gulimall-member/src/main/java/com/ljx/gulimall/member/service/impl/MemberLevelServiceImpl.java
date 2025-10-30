@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.member.dao.MemberLevelDao;
-import com.ljx.gulimall.member.entity.MemberLevelEntity;
+import com.ljx.gulimall.member.domain.entity.MemberLevelEntity;
 import com.ljx.gulimall.member.service.MemberLevelService;
 
 

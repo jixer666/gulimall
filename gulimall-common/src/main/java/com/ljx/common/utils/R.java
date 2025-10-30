@@ -25,8 +25,14 @@ import java.util.Map;
 public class R<T> extends HashMap<String, Object> {
 	private static final long serialVersionUID = 1L;
 
+    public String getErrorMsg() {
+        Object data = get("msg");
+        String jsonString = JSONObject.toJSONStringWithDateFormat(data, DateConstant.DATE_FORMAT);
+        return JSONObject.parseObject(jsonString, String.class);
+    }
 
-	public <T> T getDataObj(Class<T> type) {
+
+    public <T> T getDataObj(Class<T> type) {
 		Object data = get("data");
 		String jsonString = JSONObject.toJSONStringWithDateFormat(data, DateConstant.DATE_FORMAT);
 		return JSONObject.parseObject(jsonString, type);

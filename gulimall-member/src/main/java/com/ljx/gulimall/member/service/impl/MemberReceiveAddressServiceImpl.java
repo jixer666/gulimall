@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.member.dao.MemberReceiveAddressDao;
-import com.ljx.gulimall.member.entity.MemberReceiveAddressEntity;
+import com.ljx.gulimall.member.domain.entity.MemberReceiveAddressEntity;
 import com.ljx.gulimall.member.service.MemberReceiveAddressService;
 
 

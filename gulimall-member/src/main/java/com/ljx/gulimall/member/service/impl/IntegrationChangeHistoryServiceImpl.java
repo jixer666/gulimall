@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.member.dao.IntegrationChangeHistoryDao;
-import com.ljx.gulimall.member.entity.IntegrationChangeHistoryEntity;
+import com.ljx.gulimall.member.domain.entity.IntegrationChangeHistoryEntity;
 import com.ljx.gulimall.member.service.IntegrationChangeHistoryService;
 
 

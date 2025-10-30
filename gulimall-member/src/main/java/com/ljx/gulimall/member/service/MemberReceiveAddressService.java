@@ -2,7 +2,7 @@ package com.ljx.gulimall.member.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
-import com.ljx.gulimall.member.entity.MemberReceiveAddressEntity;
+import com.ljx.gulimall.member.domain.entity.MemberReceiveAddressEntity;
 
 import java.util.Map;
 

@@ -3,14 +3,14 @@ package com.ljx.gulimall.member.controller;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.ljx.gulimall.member.domain.vo.GithubUserVO;
+import com.ljx.gulimall.member.domain.vo.LoginVO;
+import com.ljx.gulimall.member.domain.vo.MemberVO;
+import com.ljx.gulimall.member.domain.vo.RegisterVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.ljx.gulimall.member.entity.MemberEntity;
+import com.ljx.gulimall.member.domain.entity.MemberEntity;
 import com.ljx.gulimall.member.service.MemberService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.R;
@@ -84,6 +84,21 @@ public class MemberController {
 		memberService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+    @PostMapping("/register")
+    public R register(@RequestBody RegisterVO registerVO){
+        return memberService.register(registerVO);
+    }
+
+    @PostMapping("/login")
+    public R login(@RequestBody LoginVO loginVO){
+        return memberService.login(loginVO);
+    }
+
+    @PostMapping("/login/github")
+    public R<MemberVO> githubLogin(@RequestBody GithubUserVO githubUserVO) {
+        return memberService.githubLogin(githubUserVO);
     }
 
 }
