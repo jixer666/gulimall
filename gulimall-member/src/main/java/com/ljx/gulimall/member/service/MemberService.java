@@ -24,7 +24,7 @@ public interface MemberService extends IService<MemberEntity> {
 
     R register(RegisterVO registerVO);
 
-    R login(LoginVO loginVO);
+    R<MemberVO> login(LoginVO loginVO);
 
     R<MemberVO> githubLogin(GithubUserVO githubUserVO);
 }

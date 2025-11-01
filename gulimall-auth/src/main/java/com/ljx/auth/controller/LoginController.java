@@ -3,6 +3,7 @@ package com.ljx.auth.controller;
 import com.ljx.auth.domain.vo.LoginVO;
 import com.ljx.auth.domain.vo.RegisterVO;
 import com.ljx.auth.service.LoginService;
+import com.ljx.common.constant.AuthConstant;
 import com.ljx.common.utils.R;
 import feign.Param;
 import org.apache.commons.lang.StringUtils;
@@ -13,9 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @Controller
 public class LoginController {
@@ -54,7 +57,7 @@ public class LoginController {
     }
 
     @PostMapping("/login")
-    public String login(@Valid LoginVO loginVO, BindingResult bindingResult, RedirectAttributes redirectAttributes) {
+    public String login(@Valid LoginVO loginVO, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpSession session) {
         if (bindingResult.hasErrors()) {
             Map<String, String> map = new HashMap<>();
             bindingResult.getFieldErrors().stream().forEach(item -> {
@@ -66,7 +69,7 @@ public class LoginController {
             return "redirect:http://auth.gulimall.com/login.html";
         }
 
-        R result = loginService.login(loginVO);
+        R result = loginService.login(loginVO, session);
         String errorMsg = result.getErrorMsg();
         if (result.getCode() != 0) {
             Map<String, String> map = new HashMap<>();
@@ -78,4 +81,25 @@ public class LoginController {
 
         return "redirect:http://gulimall.com";
     }
+
+    @GetMapping("/login.html")
+    public String loginPage(HttpSession session) {
+        Object userInfo = session.getAttribute(AuthConstant.LOGIN_USER);
+        if (Objects.isNull(userInfo)) {
+            return "login";
+        }
+
+        return "redirect:http://gulimall.com";
+    }
+
+    @GetMapping("/reg.html")
+    public String regPage(HttpSession session) {
+        Object userInfo = session.getAttribute(AuthConstant.LOGIN_USER);
+        if (Objects.isNull(userInfo)) {
+            return "reg";
+        }
+
+        return "redirect:http://gulimall.com";
+    }
+
 }

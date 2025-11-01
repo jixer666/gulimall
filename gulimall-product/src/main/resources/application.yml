@@ -5,6 +5,8 @@ spring:
     cache: false # 关闭缓存，生产环境建议开启
     prefix: classpath:/templates/  # 默认前缀
     suffix: .html  # 默认后缀
+  session:
+    store-type: redis
 
 logging:
   level:

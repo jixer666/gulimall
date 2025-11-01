@@ -1,9 +1,11 @@
-package com.ljx.auth.domain.vo;
+package com.ljx.common.domain.vo;
 
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class MemberVO {
+public class MemberVO implements Serializable {
 
     private Long id;
 

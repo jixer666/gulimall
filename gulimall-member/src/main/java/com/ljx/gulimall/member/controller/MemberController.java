@@ -92,7 +92,7 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public R login(@RequestBody LoginVO loginVO){
+    public R<MemberVO> login(@RequestBody LoginVO loginVO){
         return memberService.login(loginVO);
     }
 

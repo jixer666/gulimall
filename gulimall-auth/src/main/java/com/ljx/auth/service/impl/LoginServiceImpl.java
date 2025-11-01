@@ -2,21 +2,20 @@ package com.ljx.auth.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.json.JSONUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.ljx.auth.constant.OAuth2Constants;
 import com.ljx.auth.domain.vo.*;
 import com.ljx.auth.feign.MemberServiceFeign;
 import com.ljx.auth.feign.SmsServiceFeign;
 import com.ljx.auth.service.LoginService;
+import com.ljx.common.constant.AuthConstant;
 import com.ljx.common.constant.CacheConstant;
+import com.ljx.common.domain.vo.MemberVO;
 import com.ljx.common.exception.RRException;
 import com.ljx.common.utils.AssertUtil;
 import com.ljx.common.utils.HttpUtils;
 import com.ljx.common.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.util.EntityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 
-import java.net.URLDecoder;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -92,19 +91,20 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public R login(LoginVO loginVO) {
+    public R login(LoginVO loginVO, HttpSession session) {
         loginVO.checkParams();
 
-        R loginR = memberServiceFeign.login(loginVO);
-        if (StringUtils.isEmpty(loginR.getErrorMsg())) {
-            // todo
+        R<MemberVO> loginR = memberServiceFeign.login(loginVO);
+        if (loginR.getCode() == 0) {
+            MemberVO memberVO = loginR.getDataObj(MemberVO.class);
+            session.setAttribute(AuthConstant.LOGIN_USER, memberVO);
         }
 
         return loginR;
     }
 
     @Override
-    public String githubCallback(String code, String state) {
+    public String githubCallback(String code, String state, HttpSession session) {
         AssertUtil.isNotEmpty(code, "code不能为空");
         AssertUtil.isNotEmpty(state, "state不能为空");
 
@@ -131,7 +131,7 @@ public class LoginServiceImpl implements LoginService {
                 if (result.getCode() == 0) {
                     MemberVO memberVO = result.getDataObj(MemberVO.class);
                     log.info("登陆成功，用户：{}", memberVO.getUsername());
-
+                    session.setAttribute(AuthConstant.LOGIN_USER, memberVO);
                     return "redirect:http://gulimall.com";
                 } else {
                     return "redirect:http://auth.gulimall.com/login.html";

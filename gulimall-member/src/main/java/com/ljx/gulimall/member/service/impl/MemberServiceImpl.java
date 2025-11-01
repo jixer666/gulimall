@@ -85,7 +85,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
     }
 
     @Override
-    public R login(LoginVO loginVO) {
+    public R<MemberVO> login(LoginVO loginVO) {
         loginVO.checkParams();
 
         MemberEntity member = selectByUserName(loginVO.getUserName());
