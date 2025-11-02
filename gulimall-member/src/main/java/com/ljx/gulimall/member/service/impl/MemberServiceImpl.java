@@ -103,7 +103,7 @@ public class MemberServiceImpl extends ServiceImpl<MemberDao, MemberEntity> impl
     public R<MemberVO> githubLogin(GithubUserVO githubUserVO) {
         githubUserVO.checkParams(githubUserVO);
 
-        MemberEntity member = selectByUserName(githubUserVO.getName());
+        MemberEntity member = selectByUserName(githubUserVO.getLogin());
         if (Objects.isNull(member)) {
             member = MemberEntity.buildByGithubUserVo(githubUserVO);
             memberDao.insert(member);

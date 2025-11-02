@@ -41,4 +41,11 @@ public class SkuSaleAttrValueServiceImpl extends ServiceImpl<SkuSaleAttrValueDao
 
         return skuSaleAttrValueDao.selectSkuSaleAttrValueBySpuId(spuId);
     }
+
+    @Override
+    public List<String> getListBySkuId(Long skuId) {
+        AssertUtil.isNotEmpty(skuId, "skuId不能为空");
+
+        return skuSaleAttrValueDao.selectSkuSaleAttrValueBySkuId(skuId);
+    }
 }
