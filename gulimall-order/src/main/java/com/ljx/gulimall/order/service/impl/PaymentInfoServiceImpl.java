@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.order.dao.PaymentInfoDao;
-import com.ljx.gulimall.order.entity.PaymentInfoEntity;
+import com.ljx.gulimall.order.model.entity.PaymentInfoEntity;
 import com.ljx.gulimall.order.service.PaymentInfoService;
 
 

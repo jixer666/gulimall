@@ -1,6 +1,6 @@
 package com.ljx.gulimall.order.dao;
 
-import com.ljx.gulimall.order.entity.OrderReturnApplyEntity;
+import com.ljx.gulimall.order.model.entity.OrderReturnApplyEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

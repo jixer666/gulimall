@@ -1,5 +1,6 @@
 package com.ljx.gulimall.cart.interceptor;
 
+import cn.hutool.core.collection.CollUtil;
 import com.ljx.common.constant.AuthConstant;
 import com.ljx.common.context.GulimallThreadContext;
 import com.ljx.common.domain.vo.MemberVO;
@@ -30,9 +31,11 @@ public class UserInfoInterceptor implements HandlerInterceptor {
         }
 
         // 设置临时用户key
-        for (Cookie cookie : request.getCookies()) {
-            if (cookie.getName().equals(CartConstant.CART_COOKIE_NAME)) {
-                userInfoDTO.setUserKey(cookie.getValue());
+        if (Objects.nonNull(request.getCookies())) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals(CartConstant.CART_COOKIE_NAME)) {
+                    userInfoDTO.setUserKey(cookie.getValue());
+                }
             }
         }
 

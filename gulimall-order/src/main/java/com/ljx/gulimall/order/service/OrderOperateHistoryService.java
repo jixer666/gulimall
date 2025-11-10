@@ -2,7 +2,7 @@ package com.ljx.gulimall.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
-import com.ljx.gulimall.order.entity.OrderOperateHistoryEntity;
+import com.ljx.gulimall.order.model.entity.OrderOperateHistoryEntity;
 
 import java.util.Map;
 

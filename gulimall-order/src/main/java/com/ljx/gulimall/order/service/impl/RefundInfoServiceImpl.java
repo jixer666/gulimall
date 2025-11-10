@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.order.dao.RefundInfoDao;
-import com.ljx.gulimall.order.entity.RefundInfoEntity;
+import com.ljx.gulimall.order.model.entity.RefundInfoEntity;
 import com.ljx.gulimall.order.service.RefundInfoService;
 
 

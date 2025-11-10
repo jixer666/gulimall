@@ -1,14 +1,12 @@
 package com.ljx.gulimall.ware.controller;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.ljx.gulimall.ware.model.vo.AddressFareVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ljx.gulimall.ware.model.entity.WareInfoEntity;
 import com.ljx.gulimall.ware.service.WareInfoService;
@@ -86,4 +84,16 @@ public class WareInfoController {
         return R.ok();
     }
 
+
+    /**
+     * 获取运费
+     * @param id
+     * @return
+     */
+    @GetMapping("/fare")
+    public R<AddressFareVO> getAddIdFare(@RequestParam("addrId") Long addrId){
+        AddressFareVO addIdFare = wareInfoService.getAddIdFare(addrId);
+
+        return R.ok().put("data", addIdFare);
+    }
 }

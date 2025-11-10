@@ -4,7 +4,7 @@
 <mapper namespace="com.ljx.gulimall.order.dao.PaymentInfoDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.ljx.gulimall.order.entity.PaymentInfoEntity" id="paymentInfoMap">
+    <resultMap type="com.ljx.gulimall.order.model.entity.PaymentInfoEntity" id="paymentInfoMap">
         <result property="id" column="id"/>
         <result property="orderSn" column="order_sn"/>
         <result property="orderId" column="order_id"/>

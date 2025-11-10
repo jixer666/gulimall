@@ -1,8 +1,10 @@
 package com.ljx.gulimall.member.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.ljx.gulimall.member.domain.vo.MemberReceiveAddressVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,6 +43,12 @@ public class MemberReceiveAddressController {
         return R.ok().put("page", page);
     }
 
+    @RequestMapping("/list/{memberId}")
+    public R listByMemberId(@PathVariable("memberId") Long memberId){
+        List<MemberReceiveAddressVO> list = memberReceiveAddressService.listByMemberId(memberId);
+
+        return R.ok().put("data", list);
+    }
 
     /**
      * 信息
@@ -50,7 +58,7 @@ public class MemberReceiveAddressController {
     public R info(@PathVariable("id") Long id){
 		MemberReceiveAddressEntity memberReceiveAddress = memberReceiveAddressService.getById(id);
 
-        return R.ok().put("memberReceiveAddress", memberReceiveAddress);
+        return R.ok().put("data", memberReceiveAddress);
     }
 
     /**

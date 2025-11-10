@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ljx.gulimall.order.entity.OrderOperateHistoryEntity;
+import com.ljx.gulimall.order.model.entity.OrderOperateHistoryEntity;
 import com.ljx.gulimall.order.service.OrderOperateHistoryService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.R;

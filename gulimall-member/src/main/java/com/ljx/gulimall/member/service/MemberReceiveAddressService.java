@@ -3,7 +3,9 @@ package com.ljx.gulimall.member.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.gulimall.member.domain.entity.MemberReceiveAddressEntity;
+import com.ljx.gulimall.member.domain.vo.MemberReceiveAddressVO;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +18,7 @@ import java.util.Map;
 public interface MemberReceiveAddressService extends IService<MemberReceiveAddressEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<MemberReceiveAddressVO> listByMemberId(Long memberId);
 }
 

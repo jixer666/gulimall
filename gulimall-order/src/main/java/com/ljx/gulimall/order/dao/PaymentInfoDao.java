@@ -1,6 +1,6 @@
 package com.ljx.gulimall.order.dao;
 
-import com.ljx.gulimall.order.entity.PaymentInfoEntity;
+import com.ljx.gulimall.order.model.entity.PaymentInfoEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

@@ -1,5 +1,6 @@
 package com.ljx.gulimall.cart.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.json.JSONUtil;
 import com.ljx.common.context.GulimallThreadContext;
 import com.ljx.common.domain.dto.UserInfoDTO;
@@ -19,6 +20,7 @@ import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
@@ -198,5 +200,14 @@ public class CartServiceImpl implements CartService {
 
         // 对于真实项目：需要考虑的点
         // 1、校验参数 2、验证权限 3、考虑这个删除是否设计其他的更新操作，若需要就需要加上事务（若是分布式事务又需要考虑其他情况） 4、若删除的这个查询是加了缓存的，也需要删除缓存
+    }
+
+
+    @Override
+    public List<CartItemVo> getCartItems() {
+
+        return getCartCacheOps().values().stream().map(
+                item -> JSONUtil.toBean(item.toString(), CartItemVo.class)
+        ).filter(CartItemVo::getCheck).collect(Collectors.toList());
     }
 }

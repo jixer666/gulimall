@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.order.dao.OrderSettingDao;
-import com.ljx.gulimall.order.entity.OrderSettingEntity;
+import com.ljx.gulimall.order.model.entity.OrderSettingEntity;
 import com.ljx.gulimall.order.service.OrderSettingService;
 
 

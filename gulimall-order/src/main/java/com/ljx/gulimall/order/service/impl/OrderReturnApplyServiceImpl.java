@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.order.dao.OrderReturnApplyDao;
-import com.ljx.gulimall.order.entity.OrderReturnApplyEntity;
+import com.ljx.gulimall.order.model.entity.OrderReturnApplyEntity;
 import com.ljx.gulimall.order.service.OrderReturnApplyService;
 
 

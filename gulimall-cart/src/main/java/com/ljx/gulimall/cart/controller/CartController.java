@@ -1,5 +1,6 @@
 package com.ljx.gulimall.cart.controller;
 
+import com.ljx.common.utils.R;
 import com.ljx.gulimall.cart.domain.vo.CartItemVo;
 import com.ljx.gulimall.cart.domain.vo.CartVo;
 import com.ljx.gulimall.cart.service.CartService;
@@ -8,6 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 @Controller
 public class CartController {
@@ -61,6 +65,14 @@ public class CartController {
         cartService.deleteItem(skuId);
 
         return "redirect:http://cart.gulimall.com/cart.html";
+    }
+
+    @ResponseBody
+    @GetMapping("/getCartItems")
+    public R<List<CartItemVo>> getCartItems() {
+        List<CartItemVo> cartItems = cartService.getCartItems();
+
+        return R.ok().put("data",  cartItems);
     }
 
 

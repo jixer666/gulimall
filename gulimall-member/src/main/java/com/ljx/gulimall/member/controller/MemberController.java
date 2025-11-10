@@ -50,7 +50,7 @@ public class MemberController {
     public R info(@PathVariable("id") Long id){
 		MemberEntity member = memberService.getById(id);
 
-        return R.ok().put("member", member);
+        return R.ok().put("data", member);
     }
 
     /**
