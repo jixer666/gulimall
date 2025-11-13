@@ -160,4 +160,13 @@ public class SpuInfoServiceImpl extends ServiceImpl<SpuInfoDao, SpuInfoEntity> i
         spuInfo.setUpdateTime(new Date());
         spuInfoDao.updateById(spuInfo);
     }
+
+    @Override
+    public SpuInfoEntity getBySkuId(Long skuId) {
+        AssertUtil.isNotEmpty(skuId, "skuId不能为空");
+
+        SkuInfoEntity skuInfo = skuInfoService.getById(skuId);
+
+        return getById(skuInfo.getSpuId());
+    }
 }

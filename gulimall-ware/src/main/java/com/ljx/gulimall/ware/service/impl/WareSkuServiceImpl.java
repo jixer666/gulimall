@@ -1,7 +1,8 @@
 package com.ljx.gulimall.ware.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.ljx.common.exception.RRException;
+import com.ljx.gulimall.ware.model.vo.OrderStockLockVO;
 import com.ljx.gulimall.ware.model.vo.SkuHasStockVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +21,7 @@ import com.ljx.common.utils.Query;
 import com.ljx.gulimall.ware.dao.WareSkuDao;
 import com.ljx.gulimall.ware.model.entity.WareSkuEntity;
 import com.ljx.gulimall.ware.service.WareSkuService;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Service("wareSkuService")
@@ -52,5 +54,28 @@ public class WareSkuServiceImpl extends ServiceImpl<WareSkuDao, WareSkuEntity> i
                     resp.setHashStock(item.getStock() - item.getStockLocked() > 0);
                     return resp;
                 }).collect(Collectors.toList());
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public Boolean lockOrderStock(List<OrderStockLockVO> orderStockLockVOS) {
+        for (OrderStockLockVO orderStockLockVO : orderStockLockVOS) {
+            List<Long> wareIds = wareSkuDao.selectWareListBySkuId(orderStockLockVO.getSkuId());
+            if (CollUtil.isEmpty(wareIds)) {
+                throw new RRException("锁定订单失败");
+            }
+            Boolean itemResult = false;
+            for (Long wareId : wareIds) {
+                int update = wareSkuDao.lockStock(orderStockLockVO.getSkuId(), orderStockLockVO.getCount(), wareId);
+                if (update > 0) {
+                    itemResult = true;
+                    break;
+                }
+            }
+            if (!itemResult) {
+                return false;
+            }
+        }
+        return true;
     }
 }

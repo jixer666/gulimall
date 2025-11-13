@@ -3,6 +3,7 @@ package com.ljx.gulimall.ware.service;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.gulimall.ware.model.entity.WareSkuEntity;
+import com.ljx.gulimall.ware.model.vo.OrderStockLockVO;
 import com.ljx.gulimall.ware.model.vo.SkuHasStockVo;
 
 import java.util.List;
@@ -20,5 +21,7 @@ public interface WareSkuService extends IService<WareSkuEntity> {
     PageUtils queryPage(Map<String, Object> params);
 
     List<SkuHasStockVo> getHashStock(List<Long> skuIds);
+
+    Boolean lockOrderStock(List<OrderStockLockVO> orderStockLockVOS);
 }
 

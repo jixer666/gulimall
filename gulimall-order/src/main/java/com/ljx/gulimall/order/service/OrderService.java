@@ -2,10 +2,10 @@ package com.ljx.gulimall.order.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
-import com.ljx.gulimall.order.model.dto.OrderSubmitDTO;
+import com.ljx.gulimall.order.model.vo.OrderSubmitVO;
 import com.ljx.gulimall.order.model.entity.OrderEntity;
 import com.ljx.gulimall.order.model.vo.OrderConfirmVO;
-import com.ljx.gulimall.order.model.vo.OrderSubmitVO;
+import com.ljx.gulimall.order.model.vo.OrderSubmitDTO;
 
 import java.util.Map;
 
@@ -22,6 +22,6 @@ public interface OrderService extends IService<OrderEntity> {
 
     OrderConfirmVO getOrderConfirm();
 
-    OrderSubmitDTO submitOrder(OrderSubmitVO orderSubmitVO);
+    OrderSubmitVO submitOrder(OrderSubmitDTO orderSubmitDTO);
 }
 

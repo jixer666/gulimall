@@ -20,6 +20,7 @@ import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -207,7 +208,18 @@ public class CartServiceImpl implements CartService {
     public List<CartItemVo> getCartItems() {
 
         return getCartCacheOps().values().stream().map(
-                item -> JSONUtil.toBean(item.toString(), CartItemVo.class)
+                item -> {
+                    CartItemVo cartItemVo = JSONUtil.toBean(item.toString(), CartItemVo.class);
+                    R<SkuInfoEntity> skuInfoResult = productFeignService.getSkuInfo(cartItemVo.getSkuId());
+                    if (skuInfoResult.getCode() == 0) {
+                        SkuInfoEntity skuInfo = skuInfoResult.getDataObj(SkuInfoEntity.class);
+                        cartItemVo.setPrice(skuInfo.getPrice());
+                    } else {
+                        cartItemVo.setPrice(new BigDecimal("0"));
+                    }
+
+                    return cartItemVo;
+                }
         ).filter(CartItemVo::getCheck).collect(Collectors.toList());
     }
 }
