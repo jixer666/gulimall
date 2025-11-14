@@ -2,6 +2,7 @@ package com.ljx.gulimall.order.dao;
 
 import com.ljx.gulimall.order.model.entity.OrderEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.ljx.gulimall.order.service.impl.TestServiceImpl;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -13,5 +14,6 @@ import org.apache.ibatis.annotations.Mapper;
  */
 @Mapper
 public interface OrderDao extends BaseMapper<OrderEntity> {
-	
+
+    void saveTest(TestServiceImpl.Test test);
 }

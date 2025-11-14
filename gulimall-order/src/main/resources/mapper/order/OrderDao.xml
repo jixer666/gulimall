@@ -48,6 +48,9 @@
         <result property="commentTime" column="comment_time"/>
         <result property="modifyTime" column="modify_time"/>
     </resultMap>
+    <insert id="saveTest">
+        insert into test (id, content) values (#{id}, #{content})
+    </insert>
 
 
 </mapper>
