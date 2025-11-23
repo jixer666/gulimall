@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import com.ljx.gulimall.ware.model.dto.OrderStockLockDTO;
 import com.ljx.gulimall.ware.model.vo.OrderStockLockVO;
 import com.ljx.gulimall.ware.model.vo.SkuHasStockVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -93,8 +94,8 @@ public class WareSkuController {
     }
 
     @PostMapping("/lock")
-    public R<Boolean> lockOrderStock(@RequestBody List<OrderStockLockVO> orderStockLockVOS) {
-        Boolean result = wareSkuService.lockOrderStock(orderStockLockVOS);
+    public R<Boolean> lockOrderStock(@RequestBody OrderStockLockDTO orderStockLockDTO) {
+        Boolean result = wareSkuService.lockOrderStock(orderStockLockDTO);
         if (result) {
             return R.ok().setData(true);
         } else {

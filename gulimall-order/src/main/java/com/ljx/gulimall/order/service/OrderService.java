@@ -23,5 +23,11 @@ public interface OrderService extends IService<OrderEntity> {
     OrderConfirmVO getOrderConfirm();
 
     OrderSubmitVO submitOrder(OrderSubmitDTO orderSubmitDTO);
+
+    void closeOrder(String orderSn);
+
+    OrderEntity getByOrderSn(String orderSn);
+
+    PageUtils queryPageWithItem(Map<String, Object> params);
 }
 

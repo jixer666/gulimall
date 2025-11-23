@@ -2,6 +2,8 @@ package com.ljx.gulimall.ware.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
+import com.ljx.gulimall.ware.model.dto.OrderStockLockDTO;
+import com.ljx.gulimall.ware.model.dto.StockLockDTO;
 import com.ljx.gulimall.ware.model.entity.WareSkuEntity;
 import com.ljx.gulimall.ware.model.vo.OrderStockLockVO;
 import com.ljx.gulimall.ware.model.vo.SkuHasStockVo;
@@ -22,6 +24,11 @@ public interface WareSkuService extends IService<WareSkuEntity> {
 
     List<SkuHasStockVo> getHashStock(List<Long> skuIds);
 
-    Boolean lockOrderStock(List<OrderStockLockVO> orderStockLockVOS);
+    Boolean lockOrderStock(OrderStockLockDTO orderStockLockDTO);
+
+    Boolean unLockStock(StockLockDTO stockLockDTO);
+
+    Boolean unLockStock(String orderSn);
+
 }
 

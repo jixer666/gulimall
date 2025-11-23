@@ -1,9 +1,12 @@
 package com.ljx.gulimall.order.service.impl;
 
+import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.util.IdUtil;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ljx.common.context.GulimallThreadContext;
 import com.ljx.common.domain.dto.UserInfoDTO;
 import com.ljx.common.exception.RRException;
+import com.ljx.common.utils.AssertUtil;
 import com.ljx.common.utils.R;
 import com.ljx.gulimall.order.constant.OrderConstants;
 import com.ljx.gulimall.order.feign.CartServiceFeign;
@@ -11,6 +14,8 @@ import com.ljx.gulimall.order.feign.MemberServiceFeign;
 import com.ljx.gulimall.order.feign.ProductServiceFeign;
 import com.ljx.gulimall.order.feign.WareServiceFeign;
 import com.ljx.gulimall.order.model.dto.OrderDTO;
+import com.ljx.gulimall.order.model.dto.OrderStockLockDTO;
+import com.ljx.gulimall.order.model.dto.OrderWithItemDTO;
 import com.ljx.gulimall.order.model.vo.OrderSubmitVO;
 import com.ljx.gulimall.order.model.entity.MemberEntity;
 import com.ljx.gulimall.order.model.entity.OrderItemEntity;
@@ -18,7 +23,9 @@ import com.ljx.gulimall.order.model.entity.SpuInfoEntity;
 import com.ljx.gulimall.order.model.enums.OrderStatusEnum;
 import com.ljx.gulimall.order.model.vo.*;
 import com.ljx.gulimall.order.service.OrderItemService;
+import io.seata.spring.annotation.GlobalTransactional;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
@@ -40,6 +47,7 @@ import com.ljx.common.utils.Query;
 import com.ljx.gulimall.order.dao.OrderDao;
 import com.ljx.gulimall.order.model.entity.OrderEntity;
 import com.ljx.gulimall.order.service.OrderService;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -72,6 +80,12 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     @Autowired
     private TransactionTemplate transactionTemplate;
 
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
+
+    @Autowired
+    private OrderService orderService;
+
     @Override
     public PageUtils queryPage(Map<String, Object> params) {
         IPage<OrderEntity> page = this.page(
@@ -80,6 +94,28 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
         );
 
         return new PageUtils(page);
+    }
+
+    @Override
+    public PageUtils queryPageWithItem(Map<String, Object> params) {
+        Long userId = GulimallThreadContext.getUserInfo().getUserId();
+
+        IPage<OrderEntity> page = this.page(
+                new Query<OrderEntity>().getPage(params),
+                new QueryWrapper<OrderEntity>().eq("member_id",userId)
+        );
+
+        List<OrderWithItemDTO> orderWithItemDTOList = page.getRecords().stream().map(item -> {
+            OrderWithItemDTO orderWithItemDTO = BeanUtil.copyProperties(item, OrderWithItemDTO.class);
+            orderWithItemDTO.setItemEntities(orderItemService.list(
+                    new LambdaQueryWrapper<OrderItemEntity>().eq(OrderItemEntity::getOrderSn, item.getOrderSn()))
+            );
+            return orderWithItemDTO;
+        }).collect(Collectors.toList());
+
+        return new PageUtils(orderWithItemDTOList, Integer.parseInt(String.valueOf(page.getTotal())),
+                Integer.parseInt(String.valueOf(page.getPages())),
+                Integer.parseInt(String.valueOf(page.getCurrent())));
     }
 
     @Override
@@ -147,6 +183,7 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     }
 
     @Override
+//    @GlobalTransactional // 在高并发模式下不适用，原因：加了很多锁导致请求串行执行
     public OrderSubmitVO submitOrder(OrderSubmitDTO orderSubmitDTO) {
         // 校验参数直接跳过
 
@@ -184,8 +221,11 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
             saveOrder(orderDTO);
 
             // 锁定库存
-            R<Boolean> lockOrderStockResult = wareServiceFeign.lockOrderStock(orderStockLockVOS);
+            R<Boolean> lockOrderStockResult = wareServiceFeign.lockOrderStock(new OrderStockLockDTO(orderDTO.getOrderEntity().getOrderSn(), orderStockLockVOS));
+            // int i = 1 / 0; // 模拟出错，测试事务回滚
             if (lockOrderStockResult.getCode() == 0) {
+                // 发送延时队列，30分钟后自动到期
+                rabbitTemplate.convertAndSend("order-event-exchange", "order.create.order", orderDTO.getOrderEntity().getOrderSn());
                 return orderSubmitVO;
             } else {
                 orderSubmitVO.setCode(3);
@@ -326,4 +366,25 @@ public class OrderServiceImpl extends ServiceImpl<OrderDao, OrderEntity> impleme
     private String getOrderToken() {
         return stringRedisTemplate.opsForValue().get(OrderConstants.ORDER_TOKEN + GulimallThreadContext.getUserInfo().getUserId());
     }
+
+    @Override
+    public OrderEntity getByOrderSn(String orderSn) {
+        AssertUtil.isNotEmpty(orderSn, "订单号不能为空");
+
+        return orderService.getOne(new LambdaQueryWrapper<OrderEntity>().eq(OrderEntity::getOrderSn, orderSn));
+    }
+
+    @Override
+    public void closeOrder(String orderSn) {
+        OrderEntity order = getByOrderSn(orderSn);
+        if (!order.getStatus().equals(OrderStatusEnum.CREATE_NEW.getCode())) {
+            return;
+        }
+        order.setStatus(OrderStatusEnum.CANCLED.getCode());
+        updateById(order);
+
+        rabbitTemplate.convertAndSend("order-event-exchange", "order.release.other", orderSn);
+    }
+
+
 }

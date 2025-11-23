@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.ljx.gulimall.ware.model.enums.WareOrderTaskDetailLocakStatusEnum;
 import lombok.Data;
 
 /**
@@ -48,5 +50,14 @@ public class WareOrderTaskDetailEntity implements Serializable {
 	 * 1-已锁定  2-已解锁  3-扣减
 	 */
 	private Integer lockStatus;
+
+
+    public boolean isOver() {
+        return lockStatus.equals(WareOrderTaskDetailLocakStatusEnum.OVER.getStatus());
+    }
+
+    public boolean isWait() {
+        return lockStatus.equals(WareOrderTaskDetailLocakStatusEnum.WAIT.getStatus());
+    }
 
 }

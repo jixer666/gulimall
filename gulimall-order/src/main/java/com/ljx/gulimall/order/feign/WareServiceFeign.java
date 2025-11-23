@@ -1,9 +1,8 @@
 package com.ljx.gulimall.order.feign;
 
 import com.ljx.common.utils.R;
+import com.ljx.gulimall.order.model.dto.OrderStockLockDTO;
 import com.ljx.gulimall.order.model.vo.AddressFareVO;
-import com.ljx.gulimall.order.model.vo.CartItemVo;
-import com.ljx.gulimall.order.model.vo.OrderStockLockVO;
 import com.ljx.gulimall.order.model.vo.SkuHasStockVo;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,5 +22,5 @@ public interface WareServiceFeign {
     R<AddressFareVO> getAddIdFare(@RequestParam("addrId") Long addrId);
 
     @PostMapping("/ware/waresku//lock")
-    R<Boolean> lockOrderStock(@RequestBody List<OrderStockLockVO> orderStockLockVOS);
+    R<Boolean> lockOrderStock(@RequestBody OrderStockLockDTO orderStockLockDTO);
 }

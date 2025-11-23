@@ -5,6 +5,8 @@ spring:
     cache: false
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
+  session:
+    store-type: redis
 
 logging:
   level:
