@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ljx.gulimall.coupon.entity.SkuFullReductionEntity;
+import com.ljx.gulimall.coupon.model.entity.SkuFullReductionEntity;
 import com.ljx.gulimall.coupon.service.SkuFullReductionService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.R;

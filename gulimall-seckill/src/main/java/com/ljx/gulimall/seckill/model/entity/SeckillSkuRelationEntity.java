@@ -1,4 +1,4 @@
-package com.ljx.gulimall.coupon.entity;
+package com.ljx.gulimall.seckill.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -44,11 +44,11 @@ public class SeckillSkuRelationEntity implements Serializable {
 	/**
 	 * 秒杀总量
 	 */
-	private BigDecimal seckillCount;
+	private Integer seckillCount;
 	/**
 	 * 每人限购数量
 	 */
-	private BigDecimal seckillLimit;
+	private Integer seckillLimit;
 	/**
 	 * 排序
 	 */

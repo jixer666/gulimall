@@ -1,23 +1,22 @@
-package com.ljx.gulimall.coupon.entity;
+package com.ljx.gulimall.coupon.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
-import java.math.BigDecimal;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
 
 /**
- * 商品阶梯价格
+ * 秒杀商品通知订阅
  * 
  * @author LiJunXi
  * @email 2770063826@qq.com
  * @date 2025-07-15 21:45:38
  */
 @Data
-@TableName("sms_sku_ladder")
-public class SkuLadderEntity implements Serializable {
+@TableName("sms_seckill_sku_notice")
+public class SeckillSkuNoticeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -26,24 +25,28 @@ public class SkuLadderEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * spu_id
+	 * member_id
+	 */
+	private Long memberId;
+	/**
+	 * sku_id
 	 */
 	private Long skuId;
 	/**
-	 * 满几件
+	 * 活动场次id
 	 */
-	private Integer fullCount;
+	private Long sessionId;
 	/**
-	 * 打几折
+	 * 订阅时间
 	 */
-	private BigDecimal discount;
+	private Date subcribeTime;
 	/**
-	 * 折后价
+	 * 发送时间
 	 */
-	private BigDecimal price;
+	private Date sendTime;
 	/**
-	 * 是否叠加其他优惠[0-不可叠加，1-可叠加]
+	 * 通知方式[0-短信，1-邮件]
 	 */
-	private Integer addOther;
+	private Integer noticeType;
 
 }

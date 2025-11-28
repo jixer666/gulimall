@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.coupon.dao.SkuFullReductionDao;
-import com.ljx.gulimall.coupon.entity.SkuFullReductionEntity;
+import com.ljx.gulimall.coupon.model.entity.SkuFullReductionEntity;
 import com.ljx.gulimall.coupon.service.SkuFullReductionService;
 
 

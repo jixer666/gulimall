@@ -1,4 +1,4 @@
-package com.ljx.gulimall.coupon.entity;
+package com.ljx.gulimall.coupon.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -8,15 +8,15 @@ import java.util.Date;
 import lombok.Data;
 
 /**
- * 专题商品
+ * 优惠券分类关联
  * 
  * @author LiJunXi
  * @email 2770063826@qq.com
  * @date 2025-07-15 21:45:38
  */
 @Data
-@TableName("sms_home_subject_spu")
-public class HomeSubjectSpuEntity implements Serializable {
+@TableName("sms_coupon_spu_category_relation")
+public class CouponSpuCategoryRelationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -25,20 +25,16 @@ public class HomeSubjectSpuEntity implements Serializable {
 	@TableId
 	private Long id;
 	/**
-	 * 专题名字
+	 * 优惠券id
 	 */
-	private String name;
+	private Long couponId;
 	/**
-	 * 专题id
+	 * 产品分类id
 	 */
-	private Long subjectId;
+	private Long categoryId;
 	/**
-	 * spu_id
+	 * 产品分类名称
 	 */
-	private Long spuId;
-	/**
-	 * 排序
-	 */
-	private Integer sort;
+	private String categoryName;
 
 }

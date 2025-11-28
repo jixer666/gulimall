@@ -1,10 +1,12 @@
-package com.ljx.gulimall.coupon.entity;
+package com.ljx.gulimall.coupon.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import java.io.Serializable;
 import java.util.Date;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 /**
@@ -31,10 +33,12 @@ public class SeckillPromotionEntity implements Serializable {
 	/**
 	 * 开始日期
 	 */
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT+8")
 	private Date startTime;
 	/**
 	 * 结束日期
 	 */
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT+8")
 	private Date endTime;
 	/**
 	 * 上下线状态
@@ -43,6 +47,7 @@ public class SeckillPromotionEntity implements Serializable {
 	/**
 	 * 创建时间
 	 */
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "GMT+8")
 	private Date createTime;
 	/**
 	 * 创建人

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ljx.gulimall.coupon.entity.SeckillPromotionEntity;
+import com.ljx.gulimall.coupon.model.entity.SeckillPromotionEntity;
 import com.ljx.gulimall.coupon.service.SeckillPromotionService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.R;

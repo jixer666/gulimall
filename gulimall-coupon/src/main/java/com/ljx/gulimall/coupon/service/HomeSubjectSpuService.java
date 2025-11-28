@@ -2,7 +2,7 @@ package com.ljx.gulimall.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
-import com.ljx.gulimall.coupon.entity.HomeSubjectSpuEntity;
+import com.ljx.gulimall.coupon.model.entity.HomeSubjectSpuEntity;
 
 import java.util.Map;
 

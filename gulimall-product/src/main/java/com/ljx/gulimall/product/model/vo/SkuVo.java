@@ -28,7 +28,7 @@ public class SkuVo {
     // spu规格信息
     private List<SpuItemAttrGroupVO> groupAttrs;
 
-    private Object seckillSkuVo;
+    private SeckillSkuVo seckillSkuVo;
 
 
 }

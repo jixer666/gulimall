@@ -2,7 +2,7 @@ package com.ljx.gulimall.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
-import com.ljx.gulimall.coupon.entity.SeckillPromotionEntity;
+import com.ljx.gulimall.coupon.model.entity.SeckillPromotionEntity;
 
 import java.util.Map;
 

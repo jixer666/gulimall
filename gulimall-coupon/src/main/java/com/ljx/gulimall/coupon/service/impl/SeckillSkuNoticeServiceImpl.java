@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.coupon.dao.SeckillSkuNoticeDao;
-import com.ljx.gulimall.coupon.entity.SeckillSkuNoticeEntity;
+import com.ljx.gulimall.coupon.model.entity.SeckillSkuNoticeEntity;
 import com.ljx.gulimall.coupon.service.SeckillSkuNoticeService;
 
 

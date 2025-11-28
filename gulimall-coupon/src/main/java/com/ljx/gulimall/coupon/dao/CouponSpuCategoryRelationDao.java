@@ -1,6 +1,6 @@
 package com.ljx.gulimall.coupon.dao;
 
-import com.ljx.gulimall.coupon.entity.CouponSpuCategoryRelationEntity;
+import com.ljx.gulimall.coupon.model.entity.CouponSpuCategoryRelationEntity;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

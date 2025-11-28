@@ -1,14 +1,20 @@
 package com.ljx.gulimall.product.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ljx.common.exception.RRException;
 import com.ljx.common.utils.AssertUtil;
+import com.ljx.common.utils.R;
+import com.ljx.gulimall.product.feign.SeckillFeignService;
+import com.ljx.gulimall.product.model.vo.SeckillSkuVo;
 import com.ljx.gulimall.product.model.vo.SkuVo;
 import com.ljx.gulimall.product.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -45,6 +51,9 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
     @Autowired
     private ThreadPoolExecutor threadPoolExecutor;
+
+    @Autowired
+    private SeckillFeignService seckillFeignService;
 
 
     @Override
@@ -117,13 +126,26 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
             skuVo.setGroupAttrs(attrGroupService.getAttrGroupBySpuIdAndCategoryId(res.getSpuId(), res.getCatalogId()));
         }, threadPoolExecutor);
 
+        CompletableFuture<Void> skillFuture = skuFuture.thenAcceptAsync((res) -> {
+            // 秒杀信息
+            R<SeckillSkuVo> skuSeckillInfoResult = seckillFeignService.getSkuSeckillInfo(res.getSkuId());
+            if (skuSeckillInfoResult.getCode() == 0) {
+                skuVo.setSeckillSkuVo(skuSeckillInfoResult.getDataObj(SeckillSkuVo.class));
+            }
+        }, threadPoolExecutor);
+
         try {
-            CompletableFuture.allOf(imageFuture, saleAttrFuture, spuFuture, spuGroupFuture).get();
+            CompletableFuture.allOf(imageFuture, saleAttrFuture, spuFuture, spuGroupFuture, skillFuture).get();
         } catch (Exception e) {
             log.error("异步编排出错：{}", e.getMessage(), e);
             throw new RRException("异步编排出错");
         }
 
         return skuVo;
+    }
+
+    @Override
+    public List<SkuInfoEntity> getByIds(List<Long> skuIds) {
+        return CollUtil.isEmpty(skuIds) ? new ArrayList<>() : skuInfoDao.selectBatchIds(skuIds);
     }
 }

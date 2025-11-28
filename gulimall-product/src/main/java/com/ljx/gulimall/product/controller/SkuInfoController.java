@@ -1,14 +1,11 @@
 package com.ljx.gulimall.product.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ljx.gulimall.product.model.entity.SkuInfoEntity;
 import com.ljx.gulimall.product.service.SkuInfoService;
@@ -84,6 +81,13 @@ public class SkuInfoController {
 		skuInfoService.removeByIds(Arrays.asList(skuIds));
 
         return R.ok();
+    }
+
+    @PostMapping("/infos")
+    public R<List<SkuInfoEntity>> info(@RequestBody List<Long> skuIds){
+        List<SkuInfoEntity> skuInfos = skuInfoService.getByIds(skuIds);
+
+        return R.ok().put("data", skuInfos);
     }
 
 }

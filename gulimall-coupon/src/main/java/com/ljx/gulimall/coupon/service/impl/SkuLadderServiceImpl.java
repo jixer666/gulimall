@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.coupon.dao.SkuLadderDao;
-import com.ljx.gulimall.coupon.entity.SkuLadderEntity;
+import com.ljx.gulimall.coupon.model.entity.SkuLadderEntity;
 import com.ljx.gulimall.coupon.service.SkuLadderService;
 
 

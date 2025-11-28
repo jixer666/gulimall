@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.coupon.dao.CouponDao;
-import com.ljx.gulimall.coupon.entity.CouponEntity;
+import com.ljx.gulimall.coupon.model.entity.CouponEntity;
 import com.ljx.gulimall.coupon.service.CouponService;
 
 

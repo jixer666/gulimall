@@ -2,8 +2,9 @@ package com.ljx.gulimall.coupon.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.ljx.common.utils.PageUtils;
-import com.ljx.gulimall.coupon.entity.SeckillSkuRelationEntity;
+import com.ljx.gulimall.coupon.model.entity.SeckillSkuRelationEntity;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -16,5 +17,7 @@ import java.util.Map;
 public interface SeckillSkuRelationService extends IService<SeckillSkuRelationEntity> {
 
     PageUtils queryPage(Map<String, Object> params);
+
+    List<SeckillSkuRelationEntity> listBySeckillSessionId(List<Long> seckillIds);
 }
 

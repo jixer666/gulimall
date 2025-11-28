@@ -9,7 +9,7 @@ import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.Query;
 
 import com.ljx.gulimall.coupon.dao.SpuBoundsDao;
-import com.ljx.gulimall.coupon.entity.SpuBoundsEntity;
+import com.ljx.gulimall.coupon.model.entity.SpuBoundsEntity;
 import com.ljx.gulimall.coupon.service.SpuBoundsService;
 
 

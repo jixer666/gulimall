@@ -1,16 +1,14 @@
 package com.ljx.gulimall.coupon.controller;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
+import com.ljx.gulimall.coupon.model.dto.SeckillSessionDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import com.ljx.gulimall.coupon.entity.SeckillSessionEntity;
+import com.ljx.gulimall.coupon.model.entity.SeckillSessionEntity;
 import com.ljx.gulimall.coupon.service.SeckillSessionService;
 import com.ljx.common.utils.PageUtils;
 import com.ljx.common.utils.R;
@@ -84,6 +82,15 @@ public class SeckillSessionController {
 		seckillSessionService.removeByIds(Arrays.asList(ids));
 
         return R.ok();
+    }
+
+
+
+    @PostMapping("/getLast3DayData")
+    public R getLast3DayData(){
+        List<SeckillSessionDTO> result = seckillSessionService.getLast3DayData();
+
+        return R.ok().put("data", result);
     }
 
 }
