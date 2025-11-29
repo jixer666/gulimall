@@ -13,6 +13,8 @@ public class SeckillSkuVo {
 
     private Long endTime;
 
+    private String randomCode;
+
     /**
      * 活动id
      */
@@ -37,5 +39,7 @@ public class SeckillSkuVo {
      * 排序
      */
     private Integer seckillSort;
+
+    private String name;
 
 }

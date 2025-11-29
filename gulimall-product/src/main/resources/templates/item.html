@@ -687,7 +687,7 @@
                     <div class="box-btns-two"
                          th:if="${item.seckillSkuVo != null && (#dates.createNow().getTime() >= item.seckillSkuVo.startTime && #dates.createNow().getTime() <= item.seckillSkuVo.endTime)}">
                         <a class="seckill" href="#"
-                           th:attr="skuId=${item.info.skuId},sessionId=${item.seckillSkuVo.promotionSessionId},code=${item.seckillSkuVo.randomCode}">
+                           th:attr="skuId=${item.info.skuId},sessionId=${item.seckillSkuVo.promotionSessionId},code=${item.seckillSkuVo.randomCode},name=${item.seckillSkuVo.name}">
                             立即抢购
                         </a>
                     </div>
