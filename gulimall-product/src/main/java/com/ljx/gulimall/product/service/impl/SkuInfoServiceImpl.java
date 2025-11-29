@@ -1,6 +1,8 @@
 package com.ljx.gulimall.product.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import com.alibaba.csp.sentinel.annotation.SentinelResource;
+import com.alibaba.csp.sentinel.slots.block.BlockException;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ljx.common.exception.RRException;
 import com.ljx.common.utils.AssertUtil;
@@ -76,6 +78,7 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
 
 
     @Override
+    @SentinelResource(value = "getSkuItemBySkuIdResource", blockHandler = "getSkuItemBySkuIdCallback")
     public SkuVo getSkuItemBySkuId(Long skuId) {
         AssertUtil.isNotEmpty(skuId, "sku ID不能为空");
 
@@ -142,6 +145,11 @@ public class SkuInfoServiceImpl extends ServiceImpl<SkuInfoDao, SkuInfoEntity> i
         }
 
         return skuVo;
+    }
+
+    public SkuVo getSkuItemBySkuIdCallback(Long skuId, BlockException e) {
+        System.out.printf("远程调用出错：%s %s%n", skuId, e.getMessage());
+        return new SkuVo();
     }
 
     @Override
